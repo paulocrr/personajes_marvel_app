@@ -23,7 +23,7 @@ class ListaSuperHeroes {
       total: data['total'],
       count: data['count'],
       results: List.from(
-        (data['results'] as List<Map<String, dynamic>>).map((superheroe) {
+        (data['results'] as List<dynamic>).map((superheroe) {
           return SuperHeroe.fomMap(superheroe);
         }),
       ),

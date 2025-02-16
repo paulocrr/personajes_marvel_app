@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:personajes_marvel_app/data_sources/marvel_api_data_source.dart';
+import 'package:personajes_marvel_app/routes/routes.dart';
+import 'package:personajes_marvel_app/screens/pantalla_lista_super_heroes.dart';
 
 void main() async {
   await dotenv.load();
@@ -13,22 +14,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              final marvelApiDataSource = MarvelApiDataSource();
-
-              final resultado = await marvelApiDataSource.peticionGet(
-                path: '/characters',
-                parametros: {'offset': 5},
-              );
-              print(resultado);
-            },
-            child: Text('test'),
-          ),
-        ),
-      ),
+      initialRoute: Routes.home,
+      routes: {Routes.home: (_) => PantallaListaSuperHeroes()},
     );
   }
 }

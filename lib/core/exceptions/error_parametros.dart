@@ -1,0 +1,1 @@
+class ErrorParametros implements Exception {}

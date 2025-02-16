@@ -1,0 +1,1 @@
+class ErrorSinAutorizacion implements Exception {}
