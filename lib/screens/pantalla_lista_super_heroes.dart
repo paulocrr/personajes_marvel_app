@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:personajes_marvel_app/models/super_heroe.dart';
 import 'package:personajes_marvel_app/repositories/super_heroes_repository.dart';
+import 'package:personajes_marvel_app/routes/routes.dart';
 
 class PantallaListaSuperHeroes extends StatefulWidget {
   const PantallaListaSuperHeroes({super.key});
@@ -46,20 +48,38 @@ class _PantallaListaSuperHeroesState extends State<PantallaListaSuperHeroes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Lista de Super Heroes')),
-      body: PagedListView<int, SuperHeroe>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate(
-          animateTransitions: true,
-          itemBuilder: (_, superHeroe, indice) {
-            final numeroDeOrden = indice + 1;
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                    superHeroe.thumbnail.rutaCompleta),
-              ),
-              title: Text('#$numeroDeOrden ${superHeroe.name}'),
-            );
-          },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _pagingController.refresh();
+        },
+        child: PagedListView<int, SuperHeroe>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate(
+            animateTransitions: true,
+            firstPageProgressIndicatorBuilder: (context) {
+              return SpinKitDualRing(color: Colors.red);
+            },
+            newPageProgressIndicatorBuilder: (context) {
+              return SpinKitDualRing(color: Colors.red);
+            },
+            itemBuilder: (_, superHeroe, indice) {
+              final numeroDeOrden = indice + 1;
+              return ListTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.detallesHeroe,
+                    arguments: superHeroe.id,
+                  );
+                },
+                leading: CircleAvatar(
+                  backgroundImage: CachedNetworkImageProvider(
+                      superHeroe.thumbnail.rutaCompleta),
+                ),
+                title: Text('#$numeroDeOrden ${superHeroe.name}'),
+              );
+            },
+          ),
         ),
       ),
     );

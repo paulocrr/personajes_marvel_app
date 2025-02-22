@@ -16,12 +16,13 @@ class MostrarFalla extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(falla.mesanje, style: TextStyle(fontSize: 24)),
-            ElevatedButton(
-              onPressed: () {
-                reintentar?.call();
-              },
-              child: Text('Reintentar'),
-            ),
+            if (reintentar != null)
+              ElevatedButton(
+                onPressed: () {
+                  reintentar?.call();
+                },
+                child: Text('Reintentar'),
+              ),
           ],
         ),
       ),

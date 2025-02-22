@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:personajes_marvel_app/core/configs/configs.dart';
 import 'package:personajes_marvel_app/core/exceptions/error_desconocido.dart';
+import 'package:personajes_marvel_app/core/exceptions/error_no_encontrado.dart';
 import 'package:personajes_marvel_app/core/exceptions/error_parametros.dart';
 import 'package:personajes_marvel_app/core/exceptions/error_servidor.dart';
 import 'package:personajes_marvel_app/core/exceptions/error_sin_autorizacion.dart';
@@ -51,6 +52,8 @@ class MarvelApiDataSource {
 
       if (codigoError == 401) {
         throw ErrorSinAutorizacion();
+      } else if (codigoError == 404) {
+        throw ErrorNoEncontrado();
       } else if (codigoError == 409) {
         throw ErrorParametros();
       } else if (codigoError >= 500) {

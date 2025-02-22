@@ -18,9 +18,13 @@ class FallaServidor extends Failure {
 
 class FallaDeAutorizacion extends Failure {
   FallaDeAutorizacion()
-    : super(mesanje: 'Error en los parametros de autorizacion');
+      : super(mesanje: 'Error en los parametros de autorizacion');
 }
 
 class FallaEnLaConeccion extends Failure {
   FallaEnLaConeccion() : super(mesanje: 'Usted no tiene internet');
+}
+
+class FallaNoEncontrado extends Failure {
+  FallaNoEncontrado() : super(mesanje: 'No se encontro la data');
 }
