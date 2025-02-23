@@ -8,8 +8,8 @@ import 'package:personajes_marvel_app/core/exceptions/error_sin_autorizacion.dar
 import 'package:personajes_marvel_app/core/exceptions/error_sin_coneccion.dart';
 import 'package:personajes_marvel_app/core/failures/failures.dart';
 import 'package:personajes_marvel_app/data_sources/marvel_api_data_source.dart';
+import 'package:personajes_marvel_app/models/detalles_super_heroe.dart';
 import 'package:personajes_marvel_app/models/lista_super_heroes.dart';
-import 'package:personajes_marvel_app/models/super_heroe.dart';
 
 class SuperHeroesRepository {
   late MarvelApiDataSource marvelApiDataSource;
@@ -43,14 +43,14 @@ class SuperHeroesRepository {
     }
   }
 
-  Future<Either<Failure, SuperHeroe>> obtenerDetalleSuperHeroe(int id) async {
+  Future<Either<Failure, DetallesSuperHeroe>> obtenerDetalleSuperHeroe(
+      int id) async {
     try {
       final resultado = await marvelApiDataSource.peticionGet(
         path: '$_path/$id',
       );
 
-      final dataSuperHeroe = (resultado['results'] as List<dynamic>).first;
-      return Either.right(SuperHeroe.fomMap(dataSuperHeroe));
+      return Either.right(DetallesSuperHeroe.fromMap(resultado));
     } on ErrorDesconocido {
       return Either.left(FallaDesconocida());
     } on ErrorParametros {

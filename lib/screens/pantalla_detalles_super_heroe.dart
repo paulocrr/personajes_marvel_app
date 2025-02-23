@@ -36,7 +36,59 @@ class PantallaDetallesSuperHeroe extends StatelessWidget {
               body: ListView(
                 children: [
                   CachedNetworkImage(
-                      imageUrl: superHeroe.thumbnail.rutaCompleta)
+                      imageUrl: superHeroe.thumbnail.rutaCompleta),
+                  Text(
+                    superHeroe.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      spacing: 8,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Descripcion:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (superHeroe.descripcion.isEmpty) ...[
+                          Text('No hay descripcion disponible')
+                        ] else ...[
+                          Text(superHeroe.descripcion),
+                        ],
+                        if (superHeroe.comics.isNotEmpty)
+                          Text(
+                            'Comics:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ...superHeroe.comics.map((comic) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Row(
+                              spacing: 12,
+                              children: [
+                                Text(
+                                  "\u2022",
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                Expanded(child: Text(comic)),
+                              ],
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                  )
                 ],
               ),
             );
